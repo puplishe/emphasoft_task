@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список комнат</title>
+</head>
+<body>
+    <h1>Список комнат</h1>
+    <ul id="room-list">
+        <!-- Здесь будут отображаться комнаты -->
+    </ul>
+    
+    <script>
+        // JavaScript код для получения и отображения комнат
+        const roomList = document.getElementById('room-list');
+
+        // Функция для выполнения AJAX-запроса
+        function loadRooms() {
+            fetch('/api/rooms/')  // Укажите правильный URL для вашего API
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(room => {
+                        const li = document.createElement('li');
+                        li.textContent = `${room.name} - Цена за сутки: ${room.price} руб. - Количество мест: ${room.capacity}`;
+                        roomList.appendChild(li);
+                    });
+                });
+        }
+
+        // Вызов функции при загрузке страницы
+        loadRooms();
+    </script>
+</body>
+</html>
