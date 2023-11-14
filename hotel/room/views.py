@@ -1,17 +1,33 @@
-from django.shortcuts import render
-from rest_framework import generics, viewsets
+from rest_framework import viewsets, filters, permissions
 from .serializers import RoomSerializer
 from .models import Room
-from django.db.models import Q
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from datetime import date
-from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import RoomFilter
 # Create your views here.
 
 class RoomListApiView(viewsets.ModelViewSet):
+    """
+    API endpoint for managing rooms.
+
+    list:
+    Get a list of all rooms.
+
+    create:
+    Create a new room. Access to staff only.
+
+    retrieve:
+    Get details of a specific room. Access to staff only.
+
+    update:
+    Update details of a specific room. Access to staff only.
+
+    partial_update:
+    Partially update details of a specific room. Access to staff only.
+
+    destroy:
+    Delete a room. Access to staff only.
+
+    """
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     permission_classes = []
@@ -19,6 +35,9 @@ class RoomListApiView(viewsets.ModelViewSet):
     filterset_class = RoomFilter
     ordering_fields = ['price_per_night', 'capacity']
     ordering = ['name']
-    
+    def get_permissions(self):
+        if self.action == 'create' or self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
+            self.permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+        return super().get_permissions()    
     
     

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
-
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,16 +40,24 @@ INSTALLED_APPS = [
     'django_filters',
     'django.contrib.admindocs',
     'rest_framework',
+    'rest_framework_simplejwt',
     'drf_yasg',
     'booking',
     'room',
+    'user',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        
     ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+    'rest_framework.authentication.SessionAuthentication',
+    'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -63,7 +71,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'hotel.urls'
-
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=15),
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+}
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -79,7 +94,15 @@ TEMPLATES = [
         },
     },
 ]
-
+SWAGGER_SETTINGS = {
+      'SECURITY_DEFINITIONS': {
+         'Bearer': {
+               'type': 'apiKey',
+               'name': 'Authorization',
+               'in': 'header'
+         }
+      }
+   }
 WSGI_APPLICATION = 'hotel.wsgi.application'
 
 
