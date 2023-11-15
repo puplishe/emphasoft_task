@@ -25,22 +25,22 @@
 # Запуск(docker)
 1. Реализовано развертывание приложения с помощью докера, для этого небходимо установить docker desktop и запустить его.
 2. После запуска докера прописать
->  docker-compose build
+ ```docker-compose build```
 3. Дождаться билда проекта и прописать
-> docker-compose up -d
+```docker-compose up -d```
 4. Перейти на страницу
-> http://127.0.0.1:8000/swagger/
+```http://127.0.0.1:8000/swagger/```
 # Запуск (не докер)
 1. Клонировать репозиторий
 2. Из корневой директории проекта прописать
-> pip install -r requirements.txt
+```pip install -r requirements.txt```
 3. Поменять ENV файл на свои данные (postgreSQL)
 4. Создать миграции
-> python hotel/manage.py makemigrations
+```python hotel/manage.py makemigrations```
 5. Мигрировать
-> python hotel/manage.py migrate
+```python hotel/manage.py migrate```
 6. Загрузить фикстуры из корневой директории проекта прописать
-> python hotel/manage.py loaddata hotel/fixtures.json
+```python hotel/manage.py loaddata hotel/fixtures.json```
 # Описание
 1. Реализованы все пункты задания. Касаемо бронирования -> запрос get /reservation/ выводит все брони зарегестрированого пользователя, либо все существующие брони, если пользователь админ.
 2. Get запрос к комнатам позволяет фильтровать, сортировать и выводит свободные комнаты по датам.
