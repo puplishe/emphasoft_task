@@ -1,9 +1,8 @@
 from datetime import datetime
-from typing import Union, List
 
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, status
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
@@ -58,21 +57,21 @@ class ReservationViewSet(viewsets.ModelViewSet):
             "message": "Room reserved successfully."
         }
         """
-        room_id: Union[int, None] = request.data.get('room')
-        check_in_str: Union[str, None] = request.data.get('check_in')
-        check_out_str: Union[str, None] = request.data.get('check_out')
+        room_id: int | None = request.data.get('room')
+        check_in_str: str | None = request.data.get('check_in')
+        check_out_str: str | None = request.data.get('check_out')
 
         if not (room_id and check_in_str and check_out_str):
             return Response({'message': 'Invalid request. Make sure all required fields are provided.'},
                             status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            check_in = datetime.strptime(check_in_str, "%Y-%m-%d").date()
-            check_out = datetime.strptime(check_out_str, "%Y-%m-%d").date()
+            check_in = datetime.strptime(check_in_str, '%Y-%m-%d').date()
+            check_out = datetime.strptime(check_out_str, '%Y-%m-%d').date()
 
             room: Room = get_object_or_404(Room, pk=room_id)
 
-            existing_reservations: List[Reservation] = Reservation.objects.filter(room=room)
+            existing_reservations: list[Reservation] = Reservation.objects.filter(room=room)
             for reservation in existing_reservations:
                 if check_in <= reservation.check_out and check_out >= reservation.check_in:
                     return Response({'message': 'Room not available for the selected dates.'},
@@ -95,7 +94,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
         """
         Get a list of reservations for the authenticated user.
         """
-        reservations: List[Reservation] = Reservation.objects.filter(user=request.user)
+        reservations: list[Reservation] = Reservation.objects.filter(user=request.user)
         serializer: ReservationSerializer = ReservationSerializer(reservations, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

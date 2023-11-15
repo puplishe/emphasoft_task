@@ -1,7 +1,7 @@
-from django.urls import path, include
-from .views import ReservationViewSet
-from django.views.generic import TemplateView
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
+
+from .views import ReservationViewSet
 
 router = DefaultRouter()
 router.register(r'reservation', ReservationViewSet)

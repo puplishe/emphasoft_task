@@ -26,3 +26,5 @@ services:
       retries: 3
     ports:
       - "5432:5432"
+    volumes:
+      - ./hotel/fixtures.json:/hotel/fixtures.json

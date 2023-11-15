@@ -1,12 +1,10 @@
-from datetime import timedelta
+from django.contrib.auth.models import User
 from django.urls import reverse
-from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.test import APITestCase
 from room.models import Room
-from .models import Reservation
-from django.contrib.auth.models import User
 
+from .models import Reservation
 
 
 class ReservationTests(APITestCase):

@@ -13,4 +13,4 @@ RUN pip install -r requirements.txt
 
 EXPOSE 8000
 
-CMD python hotel/manage.py makemigrations && python hotel/manage.py migrate && python hotel/manage.py runserver 0.0.0.0:8000
+CMD python hotel/manage.py makemigrations && python hotel/manage.py migrate && python hotel/manage.py loaddata hotel/fixtures.json && python hotel/manage.py runserver 0.0.0.0:8000
