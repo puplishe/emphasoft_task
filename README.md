@@ -36,10 +36,10 @@
 ```pip install -r requirements.txt```
 3. Поменять ENV файл на свои данные (postgreSQL)
 4. Создать миграции
-```python hotel/manage.py makemigrations```
-5. Мигрировать
-```python hotel/manage.py migrate```
-6. Загрузить фикстуры из корневой директории проекта прописать
+`python hotel/manage.py makemigrations
+6. Мигрировать
+`python hotel/manage.py migrate
+7. Загрузить фикстуры из корневой директории проекта прописать
 ```python hotel/manage.py loaddata hotel/fixtures.json```
 # Описание
 1. Реализованы все пункты задания. Касаемо бронирования -> запрос get /reservation/ выводит все брони зарегестрированого пользователя, либо все существующие брони, если пользователь админ.
