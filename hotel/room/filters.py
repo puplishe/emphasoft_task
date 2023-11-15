@@ -1,6 +1,6 @@
 import django_filters
 from .models import Room
-from typing import List, Union
+from typing import Union
 from datetime import date
 class RoomFilter(django_filters.FilterSet):
     capacity = django_filters.NumberFilter(field_name='capacity', lookup_expr='gte')
@@ -13,12 +13,12 @@ class RoomFilter(django_filters.FilterSet):
 
     def filter_check_in(self, queryset, name: str, value: Union[date, str]) -> Room:
         """
-        Custom filter to exclude rooms with reservations on the specified check-in date.
+        Фильтр для вывода свободных комнат в интервале.
         """
         return queryset.exclude(reservation__check_out__gte=value, reservation__check_in__lte=value)
 
     def filter_check_out(self, queryset, name: str, value: Union[date, str]) -> Room:
         """
-        Custom filter to exclude rooms with reservations on the specified check-out date.
+        Фильтр для вывода свободных комнат в интервале.
         """
         return queryset.exclude(reservation__check_out__gte=value, reservation__check_in__lte=value)

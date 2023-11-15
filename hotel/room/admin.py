@@ -1,4 +1,7 @@
 from django.contrib import admin
 from .models import Room
-# Register your models here.
-admin.site.register(Room)
+
+
+@admin.register(Room)
+class RoomAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price_per_night', 'capacity')
